@@ -332,11 +332,18 @@ public void ServiceEvent(event_t event)
 	}
 
 	bool byTargetname = false;
+	int attemptCount = 0;
 	
 	// In the context of the event, the searching entity is also the caller
 	while ((targetEntity = FindEntityByName(targetEntity, event.target, caller, activator, caller)) != -1)
 	{
 		byTargetname = true;
+
+		attemptCount++;
+		if(attemptCount > 40)
+		{
+			break;
+		}
 
 		SetVariantString(event.variantValue);
 		AcceptEntityInput(targetEntity, event.targetInput, activator, caller, event.outputID);
